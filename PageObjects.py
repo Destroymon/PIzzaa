@@ -1,4 +1,4 @@
-from random import random
+import random
 import time
 from selenium.webdriver import Keys, ActionChains
 from BaseApp import BasePage
@@ -22,6 +22,16 @@ class ChromeLocators:
     LOCATOR_WINDOW_PIZZA = (By.XPATH, "//body/div[@id='react-app']/main[1]/section[1]/article[1]")
     LOCATOR_SIZE_SMALL_PIZZA = (By.XPATH, "//label[contains(text(),'Маленькая')]")
     LOCATOR_ADD_TO_CARD = (By.XPATH, "//body/div[4]/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/button[1]")
+    LOCATOR_CLICK_CARD = (By.XPATH, "///body/div[@id='react-app']/nav[1]/div[1]/div[2]/button[1]")
+
+    LOCATOR_CLICK_IMG_PIZZA11 = (By.XPATH, "//body/div[@id='react-app']/main[1]/section[1]/article[8]/main[1]/div[1]")
+    LOCATOR_CLICK_ADD_KEY = (By.XPATH, "//body/div[4]/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/button[1]")
+    LOCATOR_CLICK_IMG_PIZZA12 = (By.XPATH, "//body/div[@id='react-app']/main[1]/section[1]/article[10]/main[1]/div[1]")
+    LOCATOR_CLICK_IMG_PIZZA13 = (By.XPATH, "//body/div[@id='react-app']/main[1]/section[1]/article[9]/main[1]/div[1]")
+    LOCATOR_CLICK_IMG_PIZZA14 = (By.XPATH, "//body/div[@id='react-app']/main[1]/section[1]/article[11]/main[1]/div[1]")
+    LOCATOR_CLICK_IMG_PIZZA15 = (By.XPATH, "//body/div[@id='react-app']/main[1]/section[1]/article[12]/main[1]/div[1]")
+    LOCATOR_CARD_QANTITY = (By.XPATH, '//*[@id="react-app"]/nav/div/div[2]/button/div[2]')
+
 
 class DODORegion(BasePage):
     # В click_on_region_button мы нажимаем на кнопку "Москва" в выборе региона доставки.
@@ -46,8 +56,28 @@ class RandomPizza(BasePage):
         self.driverwait(ChromeLocators.LOCATOR_SIZE_SMALL_PIZZA).click()
     def click_add_to_card(self):
         self.driverwait(ChromeLocators.LOCATOR_ADD_TO_CARD).click()
+    def click_to_card(self):
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_CARD).click()
+    def click_artikle_pizza(self):
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_IMG_PIZZA11).click()
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_ADD_KEY).click()
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_IMG_PIZZA12).click()
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_ADD_KEY).click()
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_IMG_PIZZA13).click()
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_ADD_KEY).click()
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_IMG_PIZZA14).click()
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_ADD_KEY).click()
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_IMG_PIZZA15).click()
+        self.driverwait(ChromeLocators.LOCATOR_CLICK_ADD_KEY).click()
+        # self.driverwait(ChromeLocators.LOCATOR_CARD_QANTITY).click()
 
-def func_five(browser):    #Функция для выбора 5 пицц
+
+
+
+
+
+def func_five(browser):    #   Функция для выбора 5 пицц (не смог пока довести до ума, оставил, чтобы просто
+                            # видели логику действий)
     actions = ActionChains(browser)
     test = 0
     elements = browser.find_elements(By.XPATH, "//section[@id='pizzas']//article")
@@ -62,20 +92,24 @@ def func_five(browser):    #Функция для выбора 5 пицц
     if random_index == 3:
         click = browser.find_element(By.XPATH,
                                      "//article[@data-yellow='true']//button[@type='button'][contains(text(),'589₽')]")
-        return click, test
+        click_order = browser.find_element(By.CSS_SELECTOR, 'div.sc-1dazsw3-3.dfOCuw.show div.sc-1dazsw3-2.pnLpo div.sc-1dazsw3-1.dHDRyZ div.gsrbdo-0.bFKozP div.gsrbdo-8.dQwDFJ div.gsrbdo-18.dlfBaI > button.sc-1rmt3mq-0.cpUbDl.gsrbdo-22.gaQAWN')
+        return click, test, click_order
     elif random_index == 2:
         click = browser.find_element(By.XPATH,
                                      "//body[1]/div[3]/main[1]/section[1]/article[2]/div[1]/button[1]")
-        return click, test
+        click_order = browser.find_element(By.CSS_SELECTOR, 'div.sc-1dazsw3-3.dfOCuw.show div.sc-1dazsw3-2.pnLpo div.sc-1dazsw3-1.dHDRyZ div.gsrbdo-0.bFKozP div.gsrbdo-8.dQwDFJ div.gsrbdo-18.dlfBaI > button.sc-1rmt3mq-0.cpUbDl.gsrbdo-22.gaQAWN')
+        return click, test, click_order
     elif random_index == 1:
         click = browser.find_element(By.XPATH,
                                      "//button[contains(text(),'Собрать')]")
-        return click, test
+        click_order = browser.find_element(By.CSS_SELECTOR, 'div.sc-1dazsw3-3.dfOCuw.show div.sc-1dazsw3-2.pnLpo div.sc-1dazsw3-1.dHDRyZ div.gsrbdo-0.bFKozP div.gsrbdo-8.dQwDFJ div.gsrbdo-18.dlfBaI > button.sc-1rmt3mq-0.cpUbDl.gsrbdo-22.gaQAWN')
+        return click, test, click_order
     elif random_index > 3:
         click = browser.find_element(By.XPATH,
                                      f'//body[1]/div[3]/main[1]/section[1]/article[{random_index}]/footer[1]/button')
+        click_order = browser.find_element(By.CSS_SELECTOR, 'div.sc-1dazsw3-3.dfOCuw.show div.sc-1dazsw3-2.pnLpo div.sc-1dazsw3-1.dHDRyZ div.gsrbdo-0.bFKozP div.gsrbdo-8.dQwDFJ div.gsrbdo-18.dlfBaI > button.sc-1rmt3mq-0.cpUbDl.gsrbdo-22.gaQAWN')
         print(random_index)
-        return click, test
+        return click, test, click_order
 
 def func_one(browser):         # Функция для вызбора 1 пиццы
     actions = ActionChains(browser)
