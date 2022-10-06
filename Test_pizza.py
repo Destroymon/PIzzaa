@@ -119,11 +119,36 @@ class Test_Case_1:
         # {}Р" изменится. Сравнить со значением на главной странице (т.к. там указана цена за мелнькую пиццу)
 
 class Test_Case_2:
-    def test_quantity_pizza_moscow_page(self, browser):
+    def test_quantity_five_pizza_moscow_page(self, browser):
         quantity = LenghtPizza(browser)
         quantity.go_to_site()
         quantity.click_on_region_button()
-        arguments = func_five(browser)
-        browser.execute_script("arguments[0].click();", arguments[0])
-        assert arguments[1] == 34
-
+        actions = ActionChains(browser)
+        test = 0
+        elements = browser.find_elements(By.XPATH, "//section[@id='pizzas']//article")
+        for i in range(5):
+            actions.send_keys(Keys.PAGE_DOWN).perform()
+            time.sleep(1)
+            test = len(elements)
+        add = []
+        for i in elements:
+            add.append(i)
+        random_index = random.randrange(len(add))
+        if random_index == 3:
+            click = browser.find_element(By.XPATH,
+                                         "//article[@data-yellow='true']//button[@type='button'][contains(text(),'589₽')]")
+            return click, test
+        elif random_index == 2:
+            click = browser.find_element(By.XPATH,
+                                         "//body[1]/div[3]/main[1]/section[1]/article[2]/div[1]/button[1]")
+            return click, test
+        elif random_index == 1:
+            click = browser.find_element(By.XPATH,
+                                         "//button[contains(text(),'Собрать')]")
+            return click, test
+        elif random_index > 3:
+            click = browser.find_element(By.XPATH,
+                                         f'//body[1]/div[3]/main[1]/section[1]/article[{random_index}]/footer[1]/button')
+            print(random_index)
+            browser.execute_script("arguments[0].click();", click)
+            return click, test
